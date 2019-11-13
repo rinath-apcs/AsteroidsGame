@@ -1,6 +1,8 @@
-Spaceship spaceship;
+public Spaceship spaceship;
+HashMap<Integer[], Star> stars;
 
 public void setup() {
+  
 	size(500, 500);
 
 	noFill();
@@ -30,4 +32,3 @@ public void draw() {
 		}	
 	}
 }
-
