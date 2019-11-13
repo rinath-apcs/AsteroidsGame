@@ -2,7 +2,7 @@ public class FloaterWrapper extends Floater {
 	public FloaterWrapper(int[] xCorners, int[] yCorners, int col, int x, int y, int xv, int yv, int dir) {
 		this.xCorners = xCorners;
 		this.yCorners = yCorners;
-		myColor = color;
+		myColor = col;
 		myCenterY = x;
 		myCenterY = y;
 		myDirectionX = xv;
