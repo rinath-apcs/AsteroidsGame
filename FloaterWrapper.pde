@@ -1,5 +1,5 @@
 public class FloaterWrapper extends Floater {
-	public FloaterWrapper(int[] xCorners, int[] yCorners, int col, int x, int y, int xv, int yv, int dir) {
+	public FloaterWrapper(int[] xCorners, int[] yCorners, int col, double x, double y, double xv, double yv, double dir) {
 		this.xCorners = xCorners;
 		this.yCorners = yCorners;
 		myColor = col;
@@ -12,28 +12,32 @@ public class FloaterWrapper extends Floater {
 		corners = xCorners.length;
 	}
 
-	public FloaterWrapper(int xCorners, int yCorners, int x, int y) {
-		this(xCorners, yCorners, 255, x, y, 0, 0, 0);
+	public FloaterWrapper(int[] xCorners, int[] yCorners, double x, double y) {
+		this(xCorners, yCorners, 255, x, y, 0.0, 0.0, 0.0);
 	}
 
-	public FLoaterWrapper(int xCorners, int yCorners) {
-		this(xCorners, yCorners, 255, 0, 0, 0, 0);
+	public FloaterWrapper(int[] xCorners, int[] yCorners) {
+		this(xCorners, yCorners, 0.0, 0.0);
 	}
-
-	 public void setX(int x) {
-    	myCenterX = x; 
-    }
 
     public int getX() {
     	return (int) myCenterX;
+    }
+
+    public int getY() {
+    	return (int) myCenterY;
+    }
+
+    public double getSpecificY() {
+    	return myCenterY;
     }
 
     public void setY(int y) {
     	myCenterY = y; 
     }
 
-    public int getY() {
-    	return (int) myCenterY;
+    public void setX(int x) {
+    	myCenterX = x; 
     }
 
     public void setDirectionX(double x) {
@@ -53,7 +57,11 @@ public class FloaterWrapper extends Floater {
     }
 
     public void setPointDirection(int degrees) {
-    	myPointDirection = degrees;
+    	setSpecificPointDirection(degrees);
+    }
+
+    public void setSpecificPointDirection(double degrees) {
+    	myPointDirection = degrees / PI * 180;
     }
 
     public double getPointDirection() {
@@ -67,7 +75,17 @@ public class FloaterWrapper extends Floater {
     }
 
     @Override
+    public void accelerate(double amount) {
+    	super.accelerate(amount);
+
+    	myDirectionX = max(-MAXIMUM_VELOCITY, min(MAXIMUM_VELOCITY, (float) myDirectionX));
+    	myDirectionY = max(-MAXIMUM_VELOCITY, min(MAXIMUM_VELOCITY, (float) myDirectionY));
+    }
+
+    @Override
     public void show() {
+    	noFill();
+    	
 	    translate(width / 2.0, height / 2.0);
 
 	    float dRadians = (float) (myPointDirection*(PI/180));
