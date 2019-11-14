@@ -3,8 +3,8 @@ class Star {
 
   public Star(int chunkX, int chunkY) {
     x = (int) random(width) + chunkX * width;
-    y = (int) random(width) + chunkY * width;
-    z = (int) random(width / 4, width * 4);
+    y = (int) random(height) + chunkY * height;
+    z = (int) random(STAR_MIN_DISTANCE, STAR_MAX_DISTANCE);
   }
   
   public void show(int screenX, int screenY) {
