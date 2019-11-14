@@ -1,6 +1,7 @@
 public Spaceship spaceship;
 public ArrayList<StarChunk> chunks;
 public int screenX, screenY;
+public int loaded;
 
 public static ArrayList<PImage> images;
 
@@ -21,34 +22,66 @@ public static final int LOADING_DISTANCE = 2;
 public static final int STARS_PER_CHUNK = 20;
 public static final boolean SHOW_CHUNK_BORDERS = false;
 
-
-
 public void setup() {
-	size(1000, 1000);
-	noFill();
+	size(500, 500);
+	background(0);
+
 	strokeWeight(2);	    
 	stroke(255);
 	tint(255, 50);
+
+	noFill();
+	noLoop();
+
+	textAlign(CENTER);
 
 	images = new ArrayList();
 	screenX = screenY = 0;
 	chunks = new ArrayList();
 	spaceship = new Spaceship();
 
-	images.add(loadImage("./images/Nebula1.jpg"));
-	images.add(loadImage("./images/Nebula2.jpg"));
+	loaded = 0;
 }
 
 public void draw() {
+	if (loaded == -1) {
+		background(0);
 
-	background(0);
-
-	showAndMove();
-	handleKey();
-	loadStars();
-	setText();
+		showAndMove();
+		handleKey();
+		loadStars(LOADING_DISTANCE);
+		setText();
+	} else {
+		handleLoading();
+	}
 }
 
+public void handleLoading() {
+	if (loaded == 0) {
+		text("Loading images...", width/2, height/2);
+
+		loaded = 1;
+		loop();
+	} else if (loaded == 1) {
+		noLoop();
+		background(0);
+
+		images.add(loadImage("./images/Nebula1.jpg"));
+		images.add(loadImage("./images/Nebula2.jpg"));
+		text("Generating stars...", width / 2, width / 2);
+
+		loaded = 2;
+		loop();
+	} else if (loaded == 2) {
+		noLoop();
+
+		loadStars(LOADING_DISTANCE * 5);
+
+		loaded = -1;		
+		textAlign(BASELINE);
+		loop();
+	}
+}
 public void showAndMove() {
 	for (StarChunk chunk : chunks) {
 		chunk.show(screenX, screenY);
@@ -82,12 +115,12 @@ public void handleKey() {
 	}
 }
 
-public void loadStars() {
+public void loadStars(int distance) {
 	int currChunkX = screenX / width;
 	int currChunkY = screenY / width;
 
-	for (int y = currChunkY - LOADING_DISTANCE; y <= currChunkY + LOADING_DISTANCE; y++) {
-		for (int x = currChunkX - LOADING_DISTANCE; x <= currChunkX + LOADING_DISTANCE; x++) {
+	for (int y = currChunkY - distance; y <= currChunkY + distance; y++) {
+		for (int x = currChunkX - distance; x <= currChunkX + distance; x++) {
 			boolean exists = false;
 			for (StarChunk chunk : chunks) {
 				if (chunk.getX() == x && chunk.getY() == y) exists = true;
