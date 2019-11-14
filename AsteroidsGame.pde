@@ -2,11 +2,19 @@ public Spaceship spaceship;
 public ArrayList<StarChunk> chunks;
 public int screenX, screenY;
 
+public static ArrayList<PImage> images;
+
+
 public static final int MAXIMUM_VELOCITY = 10;
 
 public static final int DISTANCE_FROM_STARS = 250;
 public static final int STAR_MIN_DISTANCE = DISTANCE_FROM_STARS;
 public static final int STAR_MAX_DISTANCE = DISTANCE_FROM_STARS + 300;
+
+public static final int CHANCE_TO_SHOW_IMAGE = 10;
+public static final int MAXIMUM_IMAGE_SIZE = 500;
+public static final int MINIMUM_IMAGE_SIZE = 50;
+public static final int SIZING_SLOPE = (MINIMUM_IMAGE_SIZE - MAXIMUM_IMAGE_SIZE) / (STAR_MAX_DISTANCE - STAR_MIN_DISTANCE);
 
 public static final int RENDER_DISTANCE = 10;
 public static final int LOADING_DISTANCE = 2;
@@ -14,18 +22,25 @@ public static final int STARS_PER_CHUNK = 20;
 public static final boolean SHOW_CHUNK_BORDERS = false;
 
 
+
 public void setup() {
 	size(1000, 1000);
 	noFill();
 	strokeWeight(2);	    
 	stroke(255);
+	tint(255, 50);
 
+	images = new ArrayList();
 	screenX = screenY = 0;
 	chunks = new ArrayList();
 	spaceship = new Spaceship();
+
+	images.add(loadImage("./images/Nebula1.jpg"));
+	images.add(loadImage("./images/Nebula2.jpg"));
 }
 
 public void draw() {
+
 	background(0);
 
 	showAndMove();
@@ -65,7 +80,6 @@ public void handleKey() {
 	if (mousePressed) {
 			spaceship.setSpecificPointDirection(atan2(mouseY - height / 2.0, mouseX - width / 2.0));
 	}
-
 }
 
 public void loadStars() {
@@ -80,7 +94,6 @@ public void loadStars() {
 			}
 			if (!exists) {
 				chunks.add(new StarChunk(x, y));
-				println("added new chunk at: " + x + ", " + y);
 			}	
 		}
 	}
