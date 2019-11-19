@@ -18,7 +18,7 @@ class Star {
   }
   
   public void show(int screenX, int screenY) {
-  	fill((int) (width / z * 50 + 155));
+  	stroke((int) (width / z * 50 + 155));
     
     int projectedX = (x - screenX + width / 2) * (DISTANCE_FROM_STARS) / z;
     int projectedY = (y - screenY + height / 2) * (DISTANCE_FROM_STARS) / z;

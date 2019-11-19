@@ -5,14 +5,14 @@ public int loaded;
 
 public static ArrayList<PImage> images;
 
-
 public static final int MAXIMUM_VELOCITY = 10;
 
 public static final int DISTANCE_FROM_STARS = 250;
 public static final int STAR_MIN_DISTANCE = DISTANCE_FROM_STARS;
 public static final int STAR_MAX_DISTANCE = DISTANCE_FROM_STARS + 300;
 
-public static final int CHANCE_TO_SHOW_IMAGE = 10;
+public static final int CHANCE_TO_SHOW_IMAGE = 100;
+public static final int IMAGE_OPACITY = 35;
 public static final int MAXIMUM_IMAGE_SIZE = 500;
 public static final int MINIMUM_IMAGE_SIZE = 50;
 public static final int SIZING_SLOPE = (MINIMUM_IMAGE_SIZE - MAXIMUM_IMAGE_SIZE) / (STAR_MAX_DISTANCE - STAR_MIN_DISTANCE);
@@ -23,12 +23,13 @@ public static final int STARS_PER_CHUNK = 20;
 public static final boolean SHOW_CHUNK_BORDERS = false;
 
 public void setup() {
-	size(500, 500);
+	size(1000, 1000);
 	background(0);
+	frameRate(-1);
 
 	strokeWeight(2);	    
 	stroke(255);
-	tint(255, 50);
+	tint(255, IMAGE_OPACITY);
 
 	noFill();
 	noLoop();
@@ -47,10 +48,10 @@ public void draw() {
 	if (loaded == -1) {
 		background(0);
 
-		showAndMove();
 		handleKey();
 		loadStars(LOADING_DISTANCE);
-		setText();
+		drawObjects();
+		drawGUI();
 	} else {
 		handleLoading();
 	}
@@ -58,7 +59,7 @@ public void draw() {
 
 public void handleLoading() {
 	if (loaded == 0) {
-		text("Loading images...", width/2, height/2);
+		text("Loading images...", width / 2, height / 2);
 
 		loaded = 1;
 		loop();
@@ -66,8 +67,12 @@ public void handleLoading() {
 		noLoop();
 		background(0);
 
-		images.add(loadImage("./images/Nebula1.jpg"));
-		images.add(loadImage("./images/Nebula2.jpg"));
+		for (int i = 1; i <= 9; i++) {
+			PImage nebula = loadImage("./images/Nebula" + i + ".jpg");
+			nebula.resize(MAXIMUM_IMAGE_SIZE, 0);
+			images.add(nebula);
+		}
+
 		text("Generating stars...", width / 2, width / 2);
 
 		loaded = 2;
@@ -82,7 +87,7 @@ public void handleLoading() {
 		loop();
 	}
 }
-public void showAndMove() {
+public void drawObjects() {
 	for (StarChunk chunk : chunks) {
 		chunk.show(screenX, screenY);
 	}
@@ -101,11 +106,10 @@ public void handleKey() {
 				spaceship.accelerate(1);
 				break;
 			case 's':
-				spaceship.accelerate(-1);
+				spaceship.brake(0.85);
 				break;
 			case ' ':
-				spaceship.setDirectionX(0);
-				spaceship.setDirectionY(0);
+				spaceship.hyperspace();
 				break;
 		}	
 	}
@@ -132,7 +136,7 @@ public void loadStars(int distance) {
 	}
 }
 
-public void setText() {
+public void drawGUI() {
 	int currChunkX = screenX / width;
 	int currChunkY = screenY / width;
 

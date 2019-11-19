@@ -28,10 +28,6 @@ public class FloaterWrapper extends Floater {
     	return (int) myCenterY;
     }
 
-    public double getSpecificY() {
-    	return myCenterY;
-    }
-
     public void setY(int y) {
     	myCenterY = y; 
     }
@@ -82,9 +78,15 @@ public class FloaterWrapper extends Floater {
     	myDirectionY = max(-MAXIMUM_VELOCITY, min(MAXIMUM_VELOCITY, (float) myDirectionY));
     }
 
+    public void brake(double amount) {
+    	myDirectionX *= amount;
+    	myDirectionY *= amount;
+    }
+
     @Override
     public void show() {
     	noFill();
+    	stroke(myColor);
     	
 	    translate(width / 2.0, height / 2.0);
 
