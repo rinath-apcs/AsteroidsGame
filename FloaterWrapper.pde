@@ -57,7 +57,7 @@ public class FloaterWrapper extends Floater {
     }
 
     public void setSpecificPointDirection(double degrees) {
-    	myPointDirection = degrees / PI * 180;
+    	myPointDirection = degrees;
     }
 
     public double getPointDirection() {

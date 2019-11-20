@@ -7,8 +7,12 @@ public class StarChunk {
 		x = chunkX;
 		y = chunkY;
 
-		stars = new Star[(int) random(STARS_PER_CHUNK)];
-
+		if (random(CHANCE_FOR_POPULATED_CHUNK) > 1) {
+			stars = new Star[(int) random(STARS_PER_CHUNK)];
+		} else {
+			stars = new Star[STARS_PER_CHUNK * 2 + (int) random(STARS_PER_CHUNK * 10)];
+		}
+		
 		for (int i = 0; i < stars.length; i++) {
 			stars[i] = new Star(x, y);
 		}

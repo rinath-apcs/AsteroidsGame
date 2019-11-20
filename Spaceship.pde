@@ -5,8 +5,8 @@ class Spaceship extends FloaterWrapper {
 
     public void hyperspace() {
         setSpecificPointDirection(random(360));
-        setX((int) random(getX() - 500, getX() + 500));
-        setY((int) random(getY() - 500, getY() + 500));
+        setX((int) random(getX() - HYPERSPACE_RANGE, getX() + HYPERSPACE_RANGE));
+        setY((int) random(getY() - HYPERSPACE_RANGE, getY() + HYPERSPACE_RANGE));
         setDirectionX(random(MAXIMUM_VELOCITY));
         setDirectionY(random(MAXIMUM_VELOCITY));
     }

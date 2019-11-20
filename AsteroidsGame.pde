@@ -5,11 +5,13 @@ public int loaded;
 
 public static ArrayList<PImage> images;
 
-public static final int MAXIMUM_VELOCITY = 10;
+public static final int MAXIMUM_VELOCITY = 15;
+public static final int HYPERSPACE_RANGE = 500;
 
 public static final int DISTANCE_FROM_STARS = 250;
 public static final int STAR_MIN_DISTANCE = DISTANCE_FROM_STARS;
 public static final int STAR_MAX_DISTANCE = DISTANCE_FROM_STARS + 300;
+public static final int CHANCE_FOR_POPULATED_CHUNK = 15;
 
 public static final int CHANCE_TO_SHOW_IMAGE = 100;
 public static final int IMAGE_OPACITY = 35;
@@ -115,7 +117,7 @@ public void handleKey() {
 	}
 
 	if (mousePressed) {
-			spaceship.setSpecificPointDirection(atan2(mouseY - height / 2.0, mouseX - width / 2.0));
+			spaceship.setSpecificPointDirection(degrees(atan2(mouseY - height / 2.0, mouseX - width / 2.0)));
 	}
 }
 
