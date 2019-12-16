@@ -1,9 +1,9 @@
 public Spaceship spaceship;
-public ArrayList<StarChunk> chunks;
+//public ArrayList<StarChunk> chunks;
 public int screenX, screenY;
 public int loaded;
 
-public static ArrayList<PImage> images;
+//public static ArrayList<PImage> images;
 
 public static final int MAXIMUM_VELOCITY = 15;
 public static final int HYPERSPACE_RANGE = 500;
@@ -38,9 +38,9 @@ public void setup() {
 
 	textAlign(CENTER);
 
-	images = new ArrayList();
+	//images = new ArrayList();
 	screenX = screenY = 0;
-	chunks = new ArrayList();
+	//chunks = new ArrayList();
 	spaceship = new Spaceship();
 
 	loaded = 0;
@@ -51,7 +51,7 @@ public void draw() {
 		background(0);
 
 		handleKey();
-		loadStars(LOADING_DISTANCE);
+		//loadStars(LOADING_DISTANCE);
 		drawObjects();
 		drawGUI();
 	} else {
@@ -69,11 +69,11 @@ public void handleLoading() {
 		noLoop();
 		background(0);
 
-		for (int i = 1; i <= 9; i++) {
-			PImage nebula = loadImage("./images/Nebula" + i + ".jpg");
-			nebula.resize(MAXIMUM_IMAGE_SIZE, 0);
-			images.add(nebula);
-		}
+		// for (int i = 1; i <= 9; i++) {
+		// 	PImage nebula = loadImage("./images/Nebula" + i + ".jpg");
+		// 	nebula.resize(MAXIMUM_IMAGE_SIZE, 0);
+		// 	images.add(nebula);
+		// }
 
 		text("Generating stars...", width / 2, width / 2);
 
@@ -82,7 +82,7 @@ public void handleLoading() {
 	} else if (loaded == 2) {
 		noLoop();
 
-		loadStars(LOADING_DISTANCE * 5);
+		//loadStars(LOADING_DISTANCE * 5);
 
 		loaded = -1;		
 		textAlign(BASELINE);
@@ -90,9 +90,9 @@ public void handleLoading() {
 	}
 }
 public void drawObjects() {
-	for (StarChunk chunk : chunks) {
-		chunk.show(screenX, screenY);
-	}
+	// for (StarChunk chunk : chunks) {
+	// 	chunk.show(screenX, screenY);
+	// }
 
 	spaceship.show();
 	spaceship.move();
@@ -121,22 +121,22 @@ public void handleKey() {
 	}
 }
 
-public void loadStars(int distance) {
-	int currChunkX = screenX / width;
-	int currChunkY = screenY / width;
+// public void loadStars(int distance) {
+// 	int currChunkX = screenX / width;
+// 	int currChunkY = screenY / width;
 
-	for (int y = currChunkY - distance; y <= currChunkY + distance; y++) {
-		for (int x = currChunkX - distance; x <= currChunkX + distance; x++) {
-			boolean exists = false;
-			for (StarChunk chunk : chunks) {
-				if (chunk.getX() == x && chunk.getY() == y) exists = true;
-			}
-			if (!exists) {
-				chunks.add(new StarChunk(x, y));
-			}	
-		}
-	}
-}
+// 	for (int y = currChunkY - distance; y <= currChunkY + distance; y++) {
+// 		for (int x = currChunkX - distance; x <= currChunkX + distance; x++) {
+// 			boolean exists = false;
+// 			for (StarChunk chunk : chunks) {
+// 				if (chunk.getX() == x && chunk.getY() == y) exists = true;
+// 			}
+// 			if (!exists) {
+// 				chunks.add(new StarChunk(x, y));
+// 			}	
+// 		}
+// 	}
+// }
 
 public void drawGUI() {
 	int currChunkX = screenX / width;
